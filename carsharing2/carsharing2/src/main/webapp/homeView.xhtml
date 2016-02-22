@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="./publicLayout.xhtml">
+	<ui:define name="content">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Welcome to CarSharing MIJE</h1>
+			</div>
+		</div>
+
+		<c:choose>
+			<c:when test="#{login.loggedIn == false}">
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<p>Si ya está registrado en el sistema, por favor
+									identifiquese en el menú superior</p>
+								<p>
+									Si desea consultar los viajes disponibles puede buscarlos en este
+									<a href="findTrip.xhtml">enlace</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">					
+					<div class="col-md-6">
+						<div class="panel">
+							<div class="panel-body">
+								<p>
+									Si se quiere registrar como un conductor, por favor rellene
+									este <a href="registerDriver.xhtml">formulario</a>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="panel">
+							<div class="panel-body">
+								<p>
+									Si se quiere registrar como un pasajero, por favor rellene este
+									<a href="registerPassenger.xhtml">formulario</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</c:when>
+
+			<c:otherwise>
+
+				<c:choose>
+					<c:when test="#{login.driver}">
+
+						<div class="row">
+							<div class="col-md-4">
+								<div class="panel panel-default">
+									<div class="panel-body">
+										<p>
+											Para gestionar sus vehiculos acceda al siguiente <a
+												href="listCars.xhtml">enlace</a>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="panel panel-default">
+									<div class="panel-body">
+										<p>
+											Para gestionar sus viajes acceda al siguiente <a
+												href="findMyTrips.xhtml">enlace</a>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</c:when>
+
+</c:choose>
+				
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<p>
+									Para consultar los viajes disponibles acceda al siguiente <a
+										href="findTrip.xhtml">enlace</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</c:otherwise>
+		</c:choose>
+
+
+	</ui:define>
+</ui:composition>
+</html>

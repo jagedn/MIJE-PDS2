@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="./layout.xhtml">
+	<ui:define name="content">
+
+		<h:dataTable styleClass="table" headerClass="tableHeader"
+			rowClasses="tableOddRow,tableEvenRow" var="iterator"
+			value="#{showDriverComments.messages}">
+
+			<h:column>
+				<f:facet name="subject">Pasajero</f:facet>
+				<p>#{iterator.passenger.name}</p>
+			</h:column>
+
+			<h:column>
+				<f:facet name="comment">Comentario</f:facet>
+				<p>#{iterator.comment}</p>
+			</h:column>
+
+			<h:column>
+				<f:facet name="rating">Puntuacion</f:facet>
+				<p>#{iterator.ratting}</p>
+			</h:column>
+
+		</h:dataTable>
+
+		<c:if test="#{login.loggedIn}">
+			<c:if test="#{rateDriver.canRate(showDriverComments.driverId)}">
+				<h:form>
+					<h:commandLink action="rateDriver" value="Puntuar al conductor #{showDriverComments.driverId}">
+						<f:param name="driverId" value="#{showDriverComments.driverId}"></f:param>
+					</h:commandLink>
+				</h:form>
+			</c:if>
+		</c:if>
+
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="./publicLayout.xhtml">
+	<ui:define name="content">
+		<h:panelGrid columns="2" cellpadding="0" cellspacing="2">
+			<h:form id="menu">
+				<h:outputText value="Fecha: " />
+				<input name="date" size="15" type="text" id="datepicker" />
+
+				<br />
+
+				<h:outputText value="Origen: " />
+				<h:selectOneListbox value="#{findTrip.departureCity}">
+					<f:selectItems value="#{util.cities}" var="i" itemLabel="#{i.name}"
+						itemValue="#{i.name}"></f:selectItems>
+				</h:selectOneListbox>
+
+				<br />
+
+				<h:outputText value="Destino: " />
+				<h:selectOneListbox value="#{findTrip.arrivalCity}">
+					<f:selectItems value="#{util.cities}" var="i" itemLabel="#{i.name}"
+						itemValue="#{i.name}"></f:selectItems>
+				</h:selectOneListbox>
+
+				<br />
+				<h:commandButton value="Buscar" action="#{findTrip.listTrips}" />
+
+			</h:form>
+
+			<h:form id="trips">
+
+				<h:commandLink action="#{findTrip.previousScreen}" align="left"
+					value="Previous" />
+				<h:outputText value="  					 " />
+				<h:commandLink action="#{findTrip.nextScreen}" align="right"
+					value="Next" />
+				<h:dataTable value="#{findTrip.tripsListView}" var="item"
+					bgcolor="#F1F1F1" border="1" first="0" width="100%" frame="hsides"
+					rules="all">
+					<f:facet name="header">
+						<h:outputText align="center" value="Viajes: " />
+					</f:facet>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Fecha:" />
+						</f:facet>
+						<p align="left">
+							<h:outputText value="#{item.departureDate}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Hora:" />
+						</f:facet>
+						<p align="left">
+							<h:outputText value="#{item.departureTime}" />
+						</p>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Precio" />
+						</f:facet>
+						<p align="left">
+							<h:outputText value="#{item.price}" />
+						</p>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Lugar de recogida:" />
+						</f:facet>
+						<h:outputText value="#{item.fromPlace}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Lugar de llegada:" />
+						</f:facet>
+						<h:outputText value="#{item.toPlace}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Asientos disponibles" />
+						</f:facet>
+						<h:outputText value="#{item.availableSeats}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Detalles" />
+						</f:facet>
+						<h:outputText value="ID: #{item.id}"/>
+						<br></br>
+						<h:link outcome="showTrip" value="Ver detalles">
+							<f:param name="idTrip" value="#{item.id}" />
+						</h:link>						
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Comentarios Trip" />
+						</f:facet>
+						<h:commandLink action="showTripComments" value="Ver">
+							<f:param name="tripId" value="#{item.id}"></f:param>
+						</h:commandLink>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Comentarios Conductor" />
+						</f:facet>
+						<h:commandLink action="showDriverComments" value="Ver">
+							<f:param name="driverId" value="#{item.driver.email}"></f:param>
+						</h:commandLink>
+					</h:column>
+				</h:dataTable>
+			</h:form>
+		</h:panelGrid>
+	</ui:define>
+</ui:composition>
+</html>

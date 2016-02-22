@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="./layout.xhtml">
+	<ui:define name="content">
+
+		<div class="content" align="center">
+			<h1>FindAllPassengers</h1>
+
+			<div class="table-responsive">
+				<h:form>
+					<h:dataTable styleClass="table" headerClass="tableHeader"
+						bgcolor="#F1F1F1" border="3" first="0" width="50%" frame="hsides"
+						rules="all" rowClasses="tableOddRow,tableEvenRow" var="iterator"
+						value="#{findAllPassengers.passengers}">
+
+						<h:column>
+							<f:facet name="name">
+								<h:outputText align="center" value="Name" />
+							</f:facet>
+							<p>#{iterator.name}</p>
+						</h:column>
+
+						<h:column>
+							<f:facet name="email">
+								<h:outputText align="center" value="eMail" />
+							</f:facet>
+							<p>#{iterator.email}</p>
+						</h:column>
+
+					</h:dataTable>
+				</h:form>
+			</div>
+
+		</div>
+
+	</ui:define>
+</ui:composition>
+</html>

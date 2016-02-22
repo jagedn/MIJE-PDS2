@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="./layout.xhtml">
+	<ui:define name="content">
+
+		<c:if test="#{not login.driver}">
+		Solo los conductores pueden crear viajes
+		</c:if>
+
+		<c:if test="#{login.driver}">
+			<table width="100%">
+				<td rowspan="9" colspan="1">
+					<div class="content" align="center">
+						<h1>AddTrip</h1>
+
+						<h:form>
+							<p>Formulario para introducir los datos del trip</p>
+
+							<input type="hidden" value="#{login.email}" id="driverId"
+								name="driverId" />
+
+							<p>
+								Introduce Description
+								<h:inputText value="#{addTrip.description}" id="description" />
+							</p>
+
+							<p>
+								Introduce departureCity
+								<h:selectOneListbox value="#{addTrip.departureCity}">
+									<f:selectItems value="#{util.cities}" var="i"
+										itemLabel="#{i.name}" itemValue="#{i.name}"></f:selectItems>
+								</h:selectOneListbox>
+							</p>
+
+							<p>
+								Introduce fromPlace
+								<h:inputText value="#{addTrip.fromPlace}" id="fromPlace" />
+							</p>
+
+							<p>
+								Introduce departureDate (formato yyyy-MM-dd HH:mm)
+								<h:inputText value="#{addTrip.departureDate}" id="departureDate"
+									title="yyyy-MM-dd HH:mm">
+									<f:convertDateTime pattern="yyyy-MM-dd HH:mm" />
+								</h:inputText>
+							</p>
+
+							<p>
+								Introduce arrivalCity
+								<h:selectOneListbox value="#{addTrip.arrivalCity}">
+									<f:selectItems value="#{util.cities}" var="i"
+										itemLabel="#{i.name}" itemValue="#{i.name}"></f:selectItems>
+								</h:selectOneListbox>
+							</p>
+							<p>
+								Introduce toPlace
+								<h:inputText value="#{addTrip.toPlace}" id="toPlace" />
+							</p>
+							<p>
+								Introduce availableSeats
+								<h:inputText value="#{addTrip.availableSeats}"
+									id="availableSeats" />
+							</p>
+							<p>
+								Introduce price
+								<h:inputText value="#{addTrip.price}" id="price" />
+							</p>
+
+							<p>
+								<h:commandButton action="#{addTrip.addTrip()}"
+									value="Crear Trip" />
+							</p>
+						</h:form>
+					</div>
+				</td>
+			</table>
+		</c:if>
+	</ui:define>
+</ui:composition>
+</html>

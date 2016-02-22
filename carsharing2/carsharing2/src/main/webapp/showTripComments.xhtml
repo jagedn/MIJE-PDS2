@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="./layout.xhtml">
+	<ui:define name="content">
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Subject</th>
+					<th>Question</th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<ui:repeat var="question" value="#{showTripComments.messages}">
+					<tr>
+						<td><h:outputText value="#{question.subject}" /></td>
+						<td><h:outputText value="#{question.body}" /></td>
+						<td><h:form
+								rendered="${(login.user.id eq question.trip.driver.id) and (question.author.id ne iterator.trip.driver.id) and (question.subMessages.size()==0)}">
+								<h:commandLink action="replyQuestion">Responder
+						<f:param name="questionId" value="#{question.id}" />
+									<f:param name="tripId" value="#{question.trip.id}" />
+								</h:commandLink>
+							</h:form></td>
+					</tr>
+					<tr>
+						<td colspan="2"><h:dataTable value="#{question.subMessages}"
+								styleClass="table" var="iterator">
+								<h:column>
+									<f:facet name="subject">Subject</f:facet>
+									<p>#{iterator.subject}</p>
+								</h:column>
+
+								<h:column>
+									<f:facet name="comment">Body</f:facet>
+									<p>#{iterator.body}</p>
+								</h:column>
+
+								<c:if test="${login.loggedIn}">
+									<h:column>
+										<f:facet name="comment">Responder</f:facet>
+										<p>
+											<h:form
+												rendered="${(login.user.id eq iterator.trip.driver.id) and (iterator.author.id ne iterator.trip.driver.id)}">
+												<h:commandLink action="replyQuestion">Responder
+						<f:param name="questionId" value="#{iterator.id}" />
+													<f:param name="tripId" value="#{iterator.trip.id}" />
+												</h:commandLink>
+											</h:form>
+											<h:form
+												rendered="${(login.user.id eq question.author.id)}">
+												<h:commandLink action="askQuestion">No está claro ?						
+													<f:param name="tripId" value="#{iterator.trip.id}" />
+												</h:commandLink>
+											</h:form>
+										</p>
+									</h:column>
+								</c:if>
+							</h:dataTable></td>
+					</tr>
+				</ui:repeat>
+			</tbody>
+		</table>
+
+		<c:if test="${login.loggedIn}">
+			<c:if test="${login.driver == false}">
+				<h:form>
+			¿Desea preguntar algo al Driver sobre este Trip? <h:commandLink
+						action="askQuestion">Utilice este formulario
+						<f:param name="tripId" value="#{showTripComments.tripId}" />
+					</h:commandLink>
+				</h:form>
+			</c:if>
+		</c:if>
+
+	</ui:define>
+</ui:composition>
+</html>
